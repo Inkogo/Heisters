@@ -73,6 +73,7 @@
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameState.cs" />
+    <Compile Include="Core\MapLoader.cs" />
     <Compile Include="Utils\InjectAttribute.cs" />
     <Compile Include="Utils\InjectionContainer.cs" />
     <Compile Include="Core\Input.cs" />

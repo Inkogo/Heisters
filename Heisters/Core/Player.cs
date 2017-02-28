@@ -1,9 +1,10 @@
 ﻿using System;
 using OpenTK;
+using System.Linq;
 
 namespace Heisters
 {
-    class Player : GameObject
+    class Player : Entity
     {
         class TweenPosition : Tween<Vector2>
         {
@@ -20,9 +21,13 @@ namespace Heisters
         [Inject]
         PlayerSettings settings;
 
+        [Inject]
+        MapLoader mapLoader;
+
         public string name;
         public int maxHp;
         public int hp;
+        public Point tilePos;
 
         TweenPosition moveTween;
 
@@ -30,9 +35,9 @@ namespace Heisters
         {
             InjectionContainer.Instance.InjectDependencies(this);
             moveTween = null;
+            tilePos = new Point(0, 0);
         }
 
-        // maybe move this in gameState so I have map object for checkCasting
         public bool Update(float deltaTime)
         {
             if (moveTween != null)
@@ -49,19 +54,15 @@ namespace Heisters
                     switch (a)
                     {
                         case PlayerAction.moveLeft:
-                            Move(-1, 0);
-                            return true;
+                            return Move(-1, 0);
                         case PlayerAction.moveRight:
-                            Move(+1, 0);
-                            return true;
+                            return Move(+1, 0);
                         case PlayerAction.moveDown:
-                            Move(0, -1);
-                            return true;
+                            return Move(0, -1);
                         case PlayerAction.moveUp:
-                            Move(0, +1);
-                            return true;
+                            return Move(0, +1);
                         case PlayerAction.interact:
-                            return true;
+                            return Interact();
                         case PlayerAction.wait:
                             return true;
                     }
@@ -70,10 +71,29 @@ namespace Heisters
             return false;
         }
 
-        void Move(int x, int y)
+        bool Move(int x, int y)
         {
-            Vector2 newPos = new Vector2(position.X + (x * 32f), position.Y + (y * 32f));
-            moveTween = new TweenPosition(position, newPos, .2f);
+            Point p =new Point( tilePos.X + x, tilePos.Y+y);
+            Tile t = mapLoader.currentMap.GetTile(p.X, p.Y);
+            if (t != null && !t.blocked)
+            {
+                tilePos = p;
+                Vector2 newPos = new Vector2(tilePos.X * 32f, tilePos.Y * 32f);
+                moveTween = new TweenPosition(position, newPos, .2f);
+                return true;
+            }
+            return false;
+        }
+
+        bool Interact()
+        {
+            Tile t = mapLoader.currentMap.GetTilesInRange(1, tilePos, (Tile a) => a.interactable == true).FirstOrDefault();
+            if (t != null)
+            {
+                mapLoader.currentMap.GetTileType(t).OnInteract(this, t);
+                return true;
+            }
+            return false;
         }
 
         public Matrix4 GetViewMatrix(int width, int height)

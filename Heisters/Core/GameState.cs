@@ -4,7 +4,7 @@ namespace Heisters
 {
     class GameState
     {
-        public Map map;
+        public MapLoader mapLoader;
         public Player player;
         public DateTime lastPlayed;
         public DateTime createdAt;
@@ -16,9 +16,9 @@ namespace Heisters
 
         public GameState()
         {
+            mapLoader = new MapLoader();
             player = new Player() { renderer = new SpriteRenderer("test2.png"), depth = 1, };
-            map = new Map("asd", 16, 16);
-            map.transforms.Add(player);
+            mapLoader.currentMap.transforms.Add(player);
             lastPlayed = createdAt = DateTime.Now;
         }
 
@@ -26,7 +26,7 @@ namespace Heisters
         {
             if (player.Update(delta))
             {
-                map.Tick();
+                mapLoader.currentMap.Tick();
             }
         }
     }

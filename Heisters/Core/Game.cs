@@ -42,7 +42,7 @@ namespace Heisters
         {
             base.OnUpdateFrame(e);
 
-            if (gameState.map != null)
+            if (gameState.mapLoader != null)
                 gameState.Update((float)e.Time);
 
             input.Update();
@@ -55,14 +55,14 @@ namespace Heisters
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.MatrixMode(MatrixMode.Modelview);
 
-            if (gameState.map != null)
+            if (gameState.mapLoader != null)
             {
                 Matrix4 world = gameState.player.GetViewMatrix(Width, Height);
                 GL.LoadIdentity();
                 GL.MultMatrix(ref world);
                 GL.PushMatrix();
 
-                gameState.map.OnRender();
+                gameState.mapLoader.currentMap.OnRender();
             }
             GL.PopMatrix();
 

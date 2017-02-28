@@ -11,12 +11,12 @@ namespace Heisters
         public int tileId;
         public int zoneId;
         public int lightLvl;
+        public bool blocked;
+        public bool interactable;
 
         public Tile(int i)
         {
             tileId = i;
         }
-
-        virtual public void Tick(TileType t) { }
     }
 }
