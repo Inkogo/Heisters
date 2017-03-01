@@ -27,7 +27,6 @@ namespace Heisters
         public string name;
         public int maxHp;
         public int hp;
-        public Point tilePos;
 
         TweenPosition moveTween;
 
@@ -35,7 +34,6 @@ namespace Heisters
         {
             InjectionContainer.Instance.InjectDependencies(this);
             moveTween = null;
-            tilePos = new Point(0, 0);
         }
 
         public bool Update(float deltaTime)

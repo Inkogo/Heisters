@@ -27,5 +27,21 @@ namespace Heisters
         {
             return new Point(p0.X - p1.X, p0.Y - p1.Y);
         }
+
+        public override bool Equals(object obj)
+        {
+            Point p = (Point)obj;
+            if (p == null) return false;
+            return this.X == p.X && this.Y == p.Y;
+        }
+
+        //Jon Skeet magic!
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + X.GetHashCode();
+            hash = hash * 23 + Y.GetHashCode();
+            return hash;
+        }
     }
 }

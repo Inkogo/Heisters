@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using OpenTK.Graphics;
 
 namespace Heisters
 {
@@ -7,12 +8,15 @@ namespace Heisters
         public string name;
         public bool solid;
         public int durability;
+        public int emission;
 
         public SpriteRenderer renderer;
 
-        public void DrawTile(Point p)
+        public void DrawTile(Point p, Tile t)
         {
-            renderer.DrawSprite(new Vector2(p.X * renderer.tex.width, p.Y * renderer.tex.height));
+            byte l = (byte)((t.lightLvl / 15f).Remap(0, 1, 50, 255));
+            Color4 col = new Color4(l, l, l, 255);
+            renderer.DrawSprite(new Vector2(p.X * renderer.tex.width, p.Y * renderer.tex.height), col);
         }
 
         virtual public void OnInit(Tile t)

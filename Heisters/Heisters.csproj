@@ -68,12 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetPipeline\Asset.cs" />
+    <Compile Include="AssetPipeline\AssetFont.cs" />
+    <Compile Include="Utils\FontSettings.cs" />
     <Compile Include="AssetPipeline\AssetPipeline.cs" />
     <Compile Include="AssetPipeline\AssetTexture.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameState.cs" />
     <Compile Include="Core\MapLoader.cs" />
+    <Compile Include="Rendering\TextRenderer.cs" />
     <Compile Include="Utils\InjectAttribute.cs" />
     <Compile Include="Utils\InjectionContainer.cs" />
     <Compile Include="Core\Input.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Core\Map.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\PlayerActions.cs" />
+    <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\Point.cs" />
     <Compile Include="Core\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

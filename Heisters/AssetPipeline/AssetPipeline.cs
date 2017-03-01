@@ -12,11 +12,6 @@ namespace Heisters
             assets = new Dictionary<string, Asset>();
         }
 
-        public AssetTexture GetTexture(string path)
-        {
-            return GetAsset<AssetTexture>(path);
-        }
-
         public T GetAsset<T>(string path) where T : Asset, new()
         {
             if (!assets.ContainsKey(path))
